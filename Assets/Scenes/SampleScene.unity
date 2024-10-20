@@ -166,8 +166,8 @@ GameObject:
   - component: {fileID: 433241400}
   - component: {fileID: 433241398}
   - component: {fileID: 433241399}
-  - component: {fileID: 433241402}
   - component: {fileID: 433241403}
+  - component: {fileID: 433241402}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -590,8 +590,11 @@ GameObject:
   m_Component:
   - component: {fileID: 1447217424}
   - component: {fileID: 1447217423}
-  - component: {fileID: 1447217422}
+  - component: {fileID: 1447217426}
+  - component: {fileID: 1447217425}
   - component: {fileID: 1447217421}
+  - component: {fileID: 1447217422}
+  - component: {fileID: 1447217427}
   m_Layer: 0
   m_Name: BlueSlime
   m_TagString: Untagged
@@ -625,7 +628,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!70 &1447217422
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -733,6 +736,53 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1447217425
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447217420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c13635ca4e8048d589e574e10a75835, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveSpeed: 2
+--- !u!114 &1447217426
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447217420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c003af64f8f154677a620bf9d29173e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &1447217427
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1447217420}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3db27e13e0e9e45959838676265e3c0a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!4 &1674438075 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8153789295230015432, guid: f1f351f448ac5440ca6d582af5223374, type: 3}
