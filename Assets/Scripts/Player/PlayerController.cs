@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private static readonly int MoveSpeed = Animator.StringToHash("moveSpeed");
+    public bool FacingLeft { get; set; }
+    
     [SerializeField] private float moveSpeed = 1f;
     
+    private static readonly int MoveSpeed = Animator.StringToHash("moveSpeed");
     private PlayerControls _playerControls;
     private Vector2 _movement;
     private Vector2 _lookPosition;
@@ -55,6 +57,15 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 playerScreenPoint = _camera.WorldToScreenPoint(transform.position);
 
-        _spriteRenderer.flipX = _lookPosition.x < playerScreenPoint.x;
+        if (_lookPosition.x < playerScreenPoint.x)
+        {
+            _spriteRenderer.flipX = true;
+            FacingLeft = true;
+        }
+        else
+        {
+            _spriteRenderer.flipX = false;
+            FacingLeft = false;
+        }
     }
 }
