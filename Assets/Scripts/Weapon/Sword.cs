@@ -5,6 +5,7 @@ public class Sword : MonoBehaviour
 {
     [SerializeField] private GameObject _slashAnimPrefab;
     [SerializeField] private Transform _slashAnimSpawnPoint;
+    [SerializeField] private Transform _weaponCollider;
 
     private static readonly int AttackHash = Animator.StringToHash("Attack");
     private PlayerControls _playerControls;
@@ -54,9 +55,10 @@ public class Sword : MonoBehaviour
     private void Attack()
     {
         _animator.SetTrigger(AttackHash);
+        _weaponCollider.gameObject.SetActive(true);
 
         _slashAnim = Instantiate(_slashAnimPrefab, _slashAnimSpawnPoint.position, _slashAnimSpawnPoint.rotation);
-        _slashAnim.transform.parent = transform.parent.parent;
+        _slashAnim.transform.parent = transform.parent;
 
         _state = State.Attacking;
     }
@@ -72,6 +74,8 @@ public class Sword : MonoBehaviour
 
     public void OnAttackEnd()
     {
+        _weaponCollider.gameObject.SetActive(false);
+        
         _state = State.Idle;
     }
 
@@ -86,10 +90,12 @@ public class Sword : MonoBehaviour
         if (angle is > 90 or < -90)
         {
             _activeWeapon.transform.rotation = Quaternion.Euler(180, 0, -angle);
+            _weaponCollider.rotation = Quaternion.Euler(180, 0, -angle);
         }
         else
         {
             _activeWeapon.transform.rotation = Quaternion.Euler(0, 0, angle);
+            _weaponCollider.rotation = Quaternion.Euler(0, 0, angle);
         }
     }
 }
