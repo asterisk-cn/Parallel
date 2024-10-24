@@ -1,71 +1,58 @@
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : ITickable, IFixedTickable
 {
-    public bool FacingLeft { get; set; }
-    
-    [SerializeField] private float moveSpeed = 1f;
-    
-    private static readonly int MoveSpeed = Animator.StringToHash("moveSpeed");
-    private PlayerControls _playerControls;
-    private Vector2 _movement;
-    private Vector2 _lookPosition;
-    private Rigidbody2D _rb;
-    private Animator _animator;
-    private SpriteRenderer _spriteRenderer;
-    private Camera _camera;
+    private static readonly int MoveSpeedHash = Animator.StringToHash("moveSpeed");
+    private readonly Animator _animator;
+    private readonly Camera _mainCamera;
 
-    private void Awake()
+    private readonly Transform _player;
+    private readonly IPlayerInput _playerInput;
+    private readonly Rigidbody2D _rb;
+    private readonly SpriteRenderer _spriteRenderer;
+
+    [Inject]
+    public PlayerController(
+        PlayerComponentProvider componentProvider,
+        IPlayerInput playerInput)
     {
-        _playerControls = new PlayerControls();
-        _rb = GetComponent<Rigidbody2D>();
-        _animator = GetComponent<Animator>();
-        _spriteRenderer = GetComponent<SpriteRenderer>();
-        _camera = Camera.main;
-    }
-    
-    private void OnEnable()
-    {
-        _playerControls.Enable();
+        _player = componentProvider.transform;
+        _rb = componentProvider.Rigidbody2D;
+        _animator = componentProvider.Animator;
+        _spriteRenderer = componentProvider.SpriteRenderer;
+        _mainCamera = componentProvider.MainCamera;
+        _playerInput = playerInput;
+
+        MoveSpeed = componentProvider.MoveSpeed;
     }
 
-    private void Update()
+    private float MoveSpeed { get; }
+    public bool FacingLeft { get; private set; }
+
+    public void FixedTick()
     {
-        PlayerInput();
-    }
-    
-    private void FixedUpdate()
-    {
-        AdjustPlayerFacingDirection();
         Move();
+        AdjustPlayerFacingDirection();
     }
 
-    private void PlayerInput()
+    public void Tick()
     {
-        _movement = _playerControls.Movement.Move.ReadValue<Vector2>();
-        _lookPosition = _playerControls.Movement.Look.ReadValue<Vector2>();
-
-        _animator.SetFloat(MoveSpeed, _movement.magnitude);
+        _animator.SetFloat(MoveSpeedHash, _playerInput.Move.magnitude);
     }
 
     private void Move()
     {
-        _rb.MovePosition(_rb.position + _movement * (moveSpeed * Time.fixedDeltaTime));
+        var movement = _playerInput.Move * MoveSpeed * Time.fixedDeltaTime;
+        _rb.MovePosition(_player.position + (Vector3)movement);
     }
 
     private void AdjustPlayerFacingDirection()
     {
-        Vector3 playerScreenPoint = _camera.WorldToScreenPoint(transform.position);
+        var playerScreenPoint = _mainCamera.WorldToScreenPoint(_player.position);
 
-        if (_lookPosition.x < playerScreenPoint.x)
-        {
-            _spriteRenderer.flipX = true;
-            FacingLeft = true;
-        }
-        else
-        {
-            _spriteRenderer.flipX = false;
-            FacingLeft = false;
-        }
+        FacingLeft = _playerInput.Look.x < playerScreenPoint.x;
+        _spriteRenderer.flipX = FacingLeft;
     }
 }
