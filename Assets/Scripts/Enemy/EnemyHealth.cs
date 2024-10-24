@@ -6,15 +6,24 @@ using Object = UnityEngine.Object;
 
 public class EnemyHealth : IPostInitializable, IDisposable
 {
+    private readonly Flash _flash;
+    private readonly KnockBack _knockBack;
     private readonly int _maxHealth;
 
     private ReactiveProperty<int> _currentHealth;
     private GameObject _enemy;
 
-    public EnemyHealth(EnemyComponentProvider componentProvider)
+    public EnemyHealth(
+        GameObject enemy,
+        KnockBack knockBack,
+        EnemyParameter enemyParameter,
+        Flash flash
+    )
     {
-        _enemy = componentProvider.gameObject;
-        _maxHealth = componentProvider.MaxHealth;
+        _enemy = enemy;
+        _knockBack = knockBack;
+        _maxHealth = enemyParameter.MaxHealth;
+        _flash = flash;
     }
 
     public void Dispose()
@@ -33,9 +42,11 @@ public class EnemyHealth : IPostInitializable, IDisposable
             .Subscribe(_ => OnDeath());
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Transform damageSource)
     {
         _currentHealth.Value = Mathf.Max(0, _currentHealth.Value - damage);
+        _knockBack.GetKnockBack(damageSource, 15f);
+        _flash.ExecuteFlash();
     }
 
     private void OnDeath()

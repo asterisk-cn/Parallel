@@ -1,7 +1,7 @@
 using UnityEngine;
 using VContainer;
 
-public class Sword : MonoBehaviour
+public class SwordMonoBehaviour : MonoBehaviour
 {
     private SwordController _swordController;
 
