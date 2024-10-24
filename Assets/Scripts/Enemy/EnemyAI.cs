@@ -1,39 +1,54 @@
-using System.Collections;
+using System;
+using System.Threading;
+using Cysharp.Threading.Tasks;
+using R3;
 using UnityEngine;
+using VContainer.Unity;
+using Random = UnityEngine.Random;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyAI : IPostInitializable, IDisposable
 {
-    private enum State
-    {
-        Roaming
-    }
+    private readonly CancellationTokenSource _cancellationTokenSource;
+    private readonly EnemyPathfinding _pathfinding;
+    private readonly State _state;
 
-    private State _state;
-    private EnemyPathfinding _pathfinding;
-    
-    private void Awake()
+    public EnemyAI(EnemyPathfinding pathfinding)
     {
-        _pathfinding = GetComponent<EnemyPathfinding>();
+        _pathfinding = pathfinding;
+
+        _cancellationTokenSource = new CancellationTokenSource();
         _state = State.Roaming;
     }
 
-    private void Start()
+    public void Dispose()
     {
-        StartCoroutine(RoamingRoutine());
+        _cancellationTokenSource.Cancel();
+        _cancellationTokenSource.Dispose();
     }
-    
-    private IEnumerator RoamingRoutine()
+
+    public void PostInitialize()
     {
-        while (_state == State.Roaming)
-        {
-            Vector2 roamPosition = GetRoamingPosition();
-            _pathfinding.MoveTo(roamPosition);
-            yield return new WaitForSeconds(2f);
-        }
+        Observable
+            .Timer(TimeSpan.Zero, TimeSpan.FromSeconds(1))
+            .Subscribe(_ => Roam())
+            .AddTo(_cancellationTokenSource.Token);
     }
-    
+
+    private void Roam()
+    {
+        if (_state != State.Roaming) return;
+
+        var roamPosition = GetRoamingPosition();
+        _pathfinding.MoveTo(roamPosition);
+    }
+
     private Vector2 GetRoamingPosition()
     {
         return new Vector2(Random.Range(-10, 10), Random.Range(-10, 10));
+    }
+
+    private enum State
+    {
+        Roaming
     }
 }

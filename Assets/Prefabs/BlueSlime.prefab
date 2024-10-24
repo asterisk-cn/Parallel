@@ -10,9 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7339341400391673580}
   - component: {fileID: 8538944254076973800}
-  - component: {fileID: 8959336626886800081}
-  - component: {fileID: 8730821428239744939}
-  - component: {fileID: 502750419347946635}
+  - component: {fileID: 7775660498255563234}
+  - component: {fileID: 3517707758944960786}
   - component: {fileID: 1168304311210926905}
   - component: {fileID: 7644214126825945777}
   - component: {fileID: 4998065591769743509}
@@ -93,7 +92,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8959336626886800081
+--- !u!114 &7775660498255563234
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,23 +101,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1192114124160347395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c003af64f8f154677a620bf9d29173e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8730821428239744939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1192114124160347395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c13635ca4e8048d589e574e10a75835, type: 3}
+  m_Script: {fileID: 11500000, guid: c69ab9f6a9eab45b5a968b6cfcbe82a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 2
---- !u!114 &502750419347946635
+  _maxHealth: 3
+--- !u!114 &3517707758944960786
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,10 +115,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1192114124160347395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87918ca72844c472cacdfb38e38fa54c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9bd937bf83fc34fed8ec615d5edca1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxHealth: 3
 --- !u!50 &1168304311210926905
 Rigidbody2D:
   serializedVersion: 5
