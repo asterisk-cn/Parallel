@@ -8,7 +8,7 @@ using Random = UnityEngine.Random;
 
 public class EnemyAI : IPostInitializable, IDisposable
 {
-    private readonly CancellationTokenSource _cancellationTokenSource;
+    private readonly CancellationTokenSource _cts;
     private readonly EnemyPathfinding _pathfinding;
     private readonly State _state;
 
@@ -16,14 +16,14 @@ public class EnemyAI : IPostInitializable, IDisposable
     {
         _pathfinding = pathfinding;
 
-        _cancellationTokenSource = new CancellationTokenSource();
+        _cts = new CancellationTokenSource();
         _state = State.Roaming;
     }
 
     public void Dispose()
     {
-        _cancellationTokenSource.Cancel();
-        _cancellationTokenSource.Dispose();
+        _cts.Cancel();
+        _cts.Dispose();
     }
 
     public void PostInitialize()
@@ -31,7 +31,7 @@ public class EnemyAI : IPostInitializable, IDisposable
         Observable
             .Timer(TimeSpan.Zero, TimeSpan.FromSeconds(1))
             .Subscribe(_ => Roam())
-            .AddTo(_cancellationTokenSource.Token);
+            .AddTo(_cts.Token);
     }
 
     private void Roam()

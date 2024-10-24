@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7339341400391673580}
   - component: {fileID: 8538944254076973800}
-  - component: {fileID: 7775660498255563234}
+  - component: {fileID: 4926611018647553691}
   - component: {fileID: 3517707758944960786}
   - component: {fileID: 1168304311210926905}
   - component: {fileID: 7644214126825945777}
@@ -92,7 +92,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7775660498255563234
+--- !u!114 &4926611018647553691
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,11 +101,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 1192114124160347395}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c69ab9f6a9eab45b5a968b6cfcbe82a5, type: 3}
+  m_Script: {fileID: 11500000, guid: 99e7a9f790c2b4f9b9eef6b2b89bdf72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 2
-  _maxHealth: 3
+  parentReference:
+    TypeName: GameLifetimeScope
+  autoRun: 1
+  autoInjectGameObjects:
+  - {fileID: 1192114124160347395}
+  _gameObject: {fileID: 1192114124160347395}
+  _rigidbody2D: {fileID: 1168304311210926905}
+  _enemyHealthMonoBehaviour: {fileID: 3517707758944960786}
+  _parameter:
+    _maxHealth: 3
+    _moveSpeed: 2
+    _knockBackDuration: 0.1
+    _flashDuration: 0.1
+  _spriteRenderer: {fileID: 8538944254076973800}
+  _whiteFlashMaterial: {fileID: 2100000, guid: 35e4101f726b24dccbf521e667055479, type: 2}
 --- !u!114 &3517707758944960786
 MonoBehaviour:
   m_ObjectHideFlags: 0

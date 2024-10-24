@@ -7,7 +7,6 @@ public class EnemyHealthMonoBehaviour : MonoBehaviour
 
     private void OnDisable()
     {
-        _impl.Dispose();
         _impl = null;
     }
 
@@ -17,8 +16,8 @@ public class EnemyHealthMonoBehaviour : MonoBehaviour
         _impl = impl;
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(int damage, Transform damageSource)
     {
-        _impl.TakeDamage(damage);
+        _impl.TakeDamage(damage, damageSource);
     }
 }

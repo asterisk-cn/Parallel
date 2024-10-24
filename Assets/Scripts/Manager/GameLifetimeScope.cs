@@ -11,9 +11,10 @@ public class GameLifetimeScope : LifetimeScope
         builder.Register<PlayerController>(Lifetime.Scoped);
         builder.Register<SwordController>(Lifetime.Scoped);
 
+        builder.RegisterComponentInHierarchy<PlayerMonoBehaviour>();
         builder.RegisterComponentInHierarchy<PlayerComponentProvider>();
+        builder.RegisterComponentInHierarchy<SwordMonoBehaviour>();
         builder.RegisterComponentInHierarchy<SwordComponentProvider>();
-        builder.RegisterComponentInHierarchy<Sword>();
         builder.RegisterComponentInHierarchy<ActiveWeapon>();
 
         builder.RegisterEntryPoint<PlayerEntryPoint>();
